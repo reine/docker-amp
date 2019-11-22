@@ -1,0 +1,23 @@
+web:
+  build: .docker/php
+  environment:
+    - ALLOW_OVERRIDE=true
+  ports:
+    - "80:80"
+  links:
+    - db
+  volumes:
+    - ./app:/var/www/html/
+
+db:
+  image: mariadb
+  restart: always
+  volumes:
+    - ./data/db:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: root123!
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: admin123!
+    MYSQL_DATABASE: app
+  ports:
+    - "8889:3306"
