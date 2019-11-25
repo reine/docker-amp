@@ -1,0 +1,10 @@
+[req]
+distinguished_name = dn
+
+[dn]
+CN=app.local
+
+[EXT]
+subjectAltName=DNS:app.local
+keyUsage=digitalSignature
+extendedKeyUsage=serverAuth
