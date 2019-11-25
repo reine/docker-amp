@@ -1,20 +1,29 @@
-web:
-  build: .docker/php
-  environment:
-    - ALLOW_OVERRIDE=true
-  ports:
-    - "80:80"
-  links:
-    - db
-  volumes:
-    - ./app:/var/www/html/
+version: "3.1"
+services:
 
-db:
-  image: mariadb
-  restart: always
-  volumes:
-    - ./data/db:/var/lib/mysql
-  env_file:
-    - ./.docker/secret/dev.env
-  ports:
-    - "8889:3306"
+  web:
+    build: .docker/php
+    container_name: amp-web
+    volumes:
+      - ./app:/var/www/html/
+      - ./data/logs:/var/log/apache2
+    environment:
+      - ALLOW_OVERRIDE=true
+    ports:
+      - "80:80"
+
+  db:
+    image: mariadb
+    container_name: amp-db
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/mysql
+    env_file:
+      - ./.docker/secret/dev.env
+    ports:
+      - "8890:3306"
+
+networks:
+  default:
+    external:
+      name: amp-base
