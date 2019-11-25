@@ -6,6 +6,8 @@ services:
     container_name: amp-web
     volumes:
       - ./app:/var/www/html/
+      - ./.docker/apache/app.conf:/etc/apache2/sites-available/app.conf
+      - ./.docker/apache/app.conf:/etc/apache2/sites-enabled/app.conf
       - ./data/logs:/var/log/apache2
     environment:
       - ALLOW_OVERRIDE=true
